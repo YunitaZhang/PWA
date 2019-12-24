@@ -37,16 +37,16 @@ function getTeamList(idTeam) {
           var articlesHTML = "";
           data.teams.forEach(function(teams) {
             articlesHTML += `
-			
-                 <div class ="col s12 m6">
-                    <div class="card center-align">
-                       <div class="card-image">
-                          <img src="${teams.crestUrl.replace(/^http:\/\//i, 'https://')}" style="width: 170px; height: 150px; padding: 15px;">
+                 <div class ="col s12 m6 l3">
+                    <div class="card cardlist">
+                       <div class="card-image center-align">
+                          <center><span><img src="${teams.crestUrl.replace(/^http:\/\//i, 'https://')}" style="width: 170px; height: 150px; padding: 15px;"></span>
+						  </center>
                         </div>
-                        <div class="card-content" style="background: white;">
-                            <span class="card-title">${teams.name}</span>
-                            <p><a class="waves-effect waves-light btn-small" href="./teamdetail.html?id=${teams.id}">See Details</a></p>
-                        </div>
+						<div class="card-content center-align">
+						<span class="card-title">${teams.name}</span>
+						  <p><a class="waves-effect waves-light btn-small" href="./teamdetail.html?id=${teams.id}">See Details</a></p>
+						</div>
                     </div>
                   </div>
                 `;
@@ -66,19 +66,22 @@ function getTeamList(idTeam) {
       var articlesHTML = "";
       data.teams.forEach(function(teams) {
         articlesHTML += `
-                 <div class ="col s12 m6">
-                    <div class="card">
+                 <div class ="col s12 m6 l3">
+                    <div class="card cardlist">
                        <div class="card-image center-align">
-                          <img src="${teams.crestUrl.replace(/^http:\/\//i, 'https://')}" style="width: 170px; height: 150px; padding: 15px;">
+                          <center><span><img src="${teams.crestUrl.replace(/^http:\/\//i, 'https://')}" style="width: 170px; height: 150px; padding: 15px;"></span>
+						  </center>
                         </div>
-                        <div class="card-content" style="background: white;">
-                            <span class="card-title">${teams.name}</span>
-                            <p><a class="waves-effect waves-light btn-small" href="./teamdetail.html?id=${teams.id}">See Details</a></p>
-                        </div>
+						<div class="card-content center-align">
+						<span class="card-title">${teams.name}</span>
+						  <p><a class="waves-effect waves-light btn-small" href="./teamdetail.html?id=${teams.id}">See Details</a></p>
+						</div>
                     </div>
                   </div>
                 `;
           });
+		  
+		  
       // Sisipkan komponen card ke dalam elemen dengan id #content
       document.getElementById("articles").innerHTML = articlesHTML;
     })
@@ -89,86 +92,103 @@ function getTeamById() {
   var urlParams = new URLSearchParams(window.location.search);
   var idParam = urlParams.get("id");
   console.log('idParam: '+idParam);
-
+  var check=0;
+  checkID(idParam).then(count => {
+	  check=count;
+			})
+  console.log('nilai count: '+check);
+			
   if ("caches" in window) {
     caches.match(base_url + "teams/"+idParam).then(function(response) {
       if (response) {
         response.json().then(function(data) {
           var articleHTML = `
-		  <table >
-					<thead>
-					<tr>
-						<td style="text-align: center;" colspan="3" >
-							<img src="${data.crestUrl.replace(/^http:\/\//i, 'https://')}" style="width: 170px; height: 150px; padding: 15px;">
-							<br/>
-							<span class="card-title">${data.name}</span>
-						</td>
-					</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<td>
-							League Location
-						</td>
-						<td>
-							:
-						</td>
-						<td>
-							${data.area.name}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Email
-						</td>
-						<td>
-							:
-						</td>
-						<td>
-							${data.email}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Phone
-						</td>
-						<td>
-							:
-						</td>
-						<td>
-							${data.phone}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Venue
-						</td>
-						<td>
-							:
-						</td>
-						<td>
-							${data.venue}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Website
-						</td>
-						<td>
-							:
-						</td>
-						<td>
-							${data.website}
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3">
-							<p><a class="waves-effect waves-light btn-small modal-trigger center-align" href="#modal1" id="saveFave">Save Favorite</a></p>
-						</td>
-					</tr>
-					
-					</tbody>
-			    </table>
+		  <div class="row">
+					<div class="col s12">
+					  <div class="card carddetail">
+					  
+						<div class="card-image">
+						  <center><img src="${data.crestUrl.replace(/^http:\/\//i, 'https://')}" style="width: 170px; height: 150px; padding: 15px;"></center>
+						</div>
+						<div class="card-content center-align">  
+						  <table >
+								<thead>
+								<tr>
+									<td style="text-align: center; font-size:30px" colspan="3" >
+										<span >${data.name}</span>
+									</td>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td>
+										League Location
+									</td>
+									<td>
+										:
+									</td>
+									<td>
+										${data.area.name}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Email
+									</td>
+									<td>
+										:
+									</td>
+									<td>
+										${data.email}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Phone
+									</td>
+									<td>
+										:
+									</td>
+									<td>
+										${data.phone}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Venue
+									</td>
+									<td>
+										:
+									</td>
+									<td>
+										${data.venue}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Website
+									</td>
+									<td>
+										:
+									</td>
+									<td>
+										${data.website}
+										
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align: center;" colspan="3" >
+										<p><a class="waves-effect waves-light btn-small modal-trigger" id="faveButton" >Save Favorite</a></p>
+									</td>
+								</tr>
+								
+								</tbody>
+							</table>
+								
+						</div>
+					  </div>
+					</div>
+				  </div>
           `;
           // Sisipkan komponen card ke dalam elemen dengan id #content
           document.getElementById("body-content").innerHTML = articleHTML;
@@ -194,88 +214,110 @@ function getTeamById() {
 	  dataTeam['namaTeam']=data.name;
 		
       var articleHTML = `
-				<table >
-					<thead>
-					<tr>
-						<td style="text-align: center;" colspan="3" >
-							<img src="${data.crestUrl.replace(/^http:\/\//i, 'https://')}" style="width: 170px; height: 150px; padding: 15px;">
-							<br/>
-							<span class="card-title">${data.name}</span>
-						</td>
-					</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<td>
-							League Location
-						</td>
-						<td>
-							:
-						</td>
-						<td>
-							${data.area.name}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Email
-						</td>
-						<td>
-							:
-						</td>
-						<td>
-							${data.email}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Phone
-						</td>
-						<td>
-							:
-						</td>
-						<td>
-							${data.phone}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Venue
-						</td>
-						<td>
-							:
-						</td>
-						<td>
-							${data.venue}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Website
-						</td>
-						<td>
-							:
-						</td>
-						<td>
-							${data.website}
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3">
-							<p><a class="waves-effect waves-light btn-small modal-trigger" href="#modal1" id="saveFave">Save Favorite</a></p>
-						</td>
-					</tr>
-					
-					</tbody>
-			    </table>
+				<div class="row">
+					<div class="col s12">
+					  <div class="card carddetail">
+					  
+						<div class="card-image">
+						  <center><img src="${data.crestUrl.replace(/^http:\/\//i, 'https://')}" style="width: 170px; height: 150px; padding: 15px;"></center>
+						</div>
+						<div class="card-content center-align">  
+						  <table>
+								<thead>
+								<tr>
+									<td style="text-align: center; font-size:30px" colspan="3" >
+										<span >${data.name}</span>
+									</td>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td>
+										League Location
+									</td>
+									<td>
+										:
+									</td>
+									<td>
+										${data.area.name}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Email
+									</td>
+									<td>
+										:
+									</td>
+									<td>
+										${data.email}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Phone
+									</td>
+									<td>
+										:
+									</td>
+									<td>
+										${data.phone}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Venue
+									</td>
+									<td>
+										:
+									</td>
+									<td>
+										${data.venue}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Website
+									</td>
+									<td>
+										:
+									</td>
+									<td>
+										${data.website}
+										
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align: center;" colspan="3" >
+										<p><a class="waves-effect waves-light btn-small modal-trigger" href="#modal1" id="faveButton" >Save Favorite</a></p>
+									</td>
+								</tr>
+								
+								</tbody>
+							</table>
+								
+						</div>
+					  </div>
+					</div>
+				  </div>
         `;
       // Sisipkan komponen card ke dalam elemen dengan id #content
       document.getElementById("body-content").innerHTML = articleHTML;
 	  
 
-	  $('#saveFave').click(function() {
-		  dbInsertTeam(dataTeam).then(() => {
-        })
+	  $('#faveButton').click(function() {
+		  var text= document.querySelector('#faveButton').innerText;
+		  console.log("button text "+ text);
+		  if(text.toLowerCase() == "Save Favorite".toLowerCase()){
+				  dbInsertTeam(dataTeam).then(() => {
+			})
+			console.log("masuk insert");
+		  }else{
+				  dbDeleteTeam(dataTeam.idTeam).then(() => {
+			})
+			console.log("masuk delete");
+		  }
+		  
 		
 		$('.modal-trigger').leanModal();
 		

@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				 <td>${team.phone}</td>
 				 <td>${team.venue}</td>
 				 <td>${team.website}</td>
-                 <td><button id="${team.idTeam}" class="removeButton">Remove</button></td>
+                 <td><a class="waves-effect waves-light btn-small modal-trigger removeButton" id="${team.idTeam}" >Delete Favorite</a></td>
                </tr>
                `;
            });
